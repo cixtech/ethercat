@@ -29,7 +29,8 @@ SUBDIRS = \
 	igb \
 	igc \
 	r8169 \
-	stmmac
+	stmmac \
+	macb
 
 EXTRA_DIST = \
 	8139too-3.0-ethercat.c \

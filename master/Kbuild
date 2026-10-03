@@ -1,0 +1,72 @@
+#-----------------------------------------------------------------------------
+#
+#  Copyright (C) 2006-2024  Florian Pose, Ingenieurgemeinschaft IgH
+#  Copyright (C) 2026  Cix Technology Group Co., Ltd.
+#
+#  This file is part of the IgH EtherCAT Master.
+#
+#  The IgH EtherCAT Master is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License version 2, as
+#  published by the Free Software Foundation.
+#
+#  vi: syntax=make
+#
+#-----------------------------------------------------------------------------
+
+ccflags-y := -I$(src)/..
+
+obj-m := ec_master.o
+
+ec_master-objs := \
+	cdev.o \
+	coe_emerg_ring.o \
+	datagram.o \
+	datagram_pair.o \
+	device.o \
+	domain.o \
+	flag.o \
+	fmmu_config.o \
+	foe_request.o \
+	fsm_change.o \
+	fsm_coe.o \
+	fsm_foe.o \
+	fsm_master.o \
+	fsm_pdo.o \
+	fsm_pdo_entry.o \
+	fsm_sii.o \
+	fsm_slave.o \
+	fsm_slave_config.o \
+	fsm_slave_scan.o \
+	fsm_soe.o \
+	ioctl.o \
+	mailbox.o \
+	master.o \
+	module.o \
+	pdo.o \
+	pdo_entry.o \
+	pdo_list.o \
+	reg_request.o \
+	sdo.o \
+	sdo_entry.o \
+	sdo_request.o \
+	slave.o \
+	slave_config.o \
+	soe_errors.o \
+	soe_request.o \
+	sync.o \
+	sync_config.o \
+	voe_handler.o
+
+ifeq ($(CONFIG_XENOMAI),y)
+ccflags-y += -DEC_RTDM -DEC_RTDM_XENOMAI_V3 -I$(srctree)/include/xenomai
+ec_master-objs += rtdm_xenomai_v3.o rtdm-ioctl.o
+CFLAGS_rtdm-ioctl.o += -DEC_IOCTL_RTDM
+endif
+
+REV := $(shell if test -s $(src)/../revision; then cat $(src)/../revision; else echo 1.6.8; fi)
+
+CFLAGS_module.o := -DREV=$(REV)
+
+KBUILD_CFLAGS += -Wmaybe-uninitialized
+
+#-----------------------------------------------------------------------------

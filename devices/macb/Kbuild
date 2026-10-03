@@ -1,0 +1,30 @@
+#-----------------------------------------------------------------------------
+#
+#  Copyright (C) 2006-2008  Florian Pose, Ingenieurgemeinschaft IgH
+#  Copyright (C) 2026  Cix Technology Group Co., Ltd.
+#
+#  This file is part of the IgH EtherCAT Master.
+#
+#  The IgH EtherCAT Master is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License version 2, as
+#  published by the Free Software Foundation.
+#
+#  vim: syntax=make
+#
+#-----------------------------------------------------------------------------
+
+ccflags-y := -I$(src)/../..
+
+REV := $(shell if test -s $(src)/../../revision; then cat $(src)/../../revision; else echo 1.6.8; fi)
+
+obj-m += ec_macb.o
+
+ec_macb-objs := \
+	macb_main-6.6-ethercat.o \
+	macb_ptp-6.6-ethercat.o
+
+CFLAGS_macb_main-6.6-ethercat.o = -DREV=$(REV)
+
+KBUILD_EXTRA_SYMBOLS := $(src)/../../master/Module.symvers
+
+#-----------------------------------------------------------------------------

@@ -599,6 +599,57 @@ AC_SUBST(KERNEL_IGC, [$kerneligc])
 AC_SUBST(HAS_IGC_LEDS, [$has_igc_leds])
 
 #-----------------------------------------------------------------------------
+# macb driver
+#-----------------------------------------------------------------------------
+AC_ARG_ENABLE([macb],
+    AS_HELP_STRING([--enable-macb],
+                   [Enable macb driver]),
+    [
+        case "${enableval}" in
+            yes) enable_macb=1
+                ;;
+            no) enable_macb=0
+                ;;
+            *) AC_MSG_ERROR([Invalid value for --enable-macb])
+                ;;
+        esac
+    ],
+    [enable_macb=0] # disabled by default
+)
+
+AM_CONDITIONAL(ENABLE_MACB, test "x$enable_macb" = "x1")
+AC_SUBST(ENABLE_MACB, [$enable_macb])
+
+AC_ARG_WITH([macb-kernel],
+    AS_HELP_STRING([--with-macb-kernel=<X.Y.Z>],
+                   [macb kernel (only if differing)]
+    ),
+    [
+        kernel_macb=[$withval]
+    ],
+    [
+        kernel_macb=$linuxversion
+    ]
+)
+
+if test "x${enable_macb}" = "x1"; then
+    AC_MSG_CHECKING([for kernel for macb driver])
+
+    # macb driver is always in subdirectory (devices/macb/)
+    macb_in_subdir=1
+
+    if test ! -f "${srcdir}/devices/macb/macb_main-${kernel_macb}-orig.c"; then
+        AC_MSG_ERROR([kernel $kernel_macb not available for macb driver!])
+    fi
+
+    AC_MSG_RESULT([$kernel_macb])
+
+fi
+
+AC_SUBST(KERNEL_MACB, [$kernel_macb])
+AC_SUBST(MACB_IN_SUBDIR, [$macb_in_subdir])
+
+#-----------------------------------------------------------------------------
 # r8169 driver
 #-----------------------------------------------------------------------------
 
@@ -1419,6 +1470,8 @@ AC_CONFIG_FILES([
         devices/igc/Makefile
         devices/r8169/Kbuild
         devices/r8169/Makefile
+        devices/macb/Kbuild
+        devices/macb/Makefile
         devices/stmmac/Kbuild
         devices/stmmac/Makefile
         ethercat.spec

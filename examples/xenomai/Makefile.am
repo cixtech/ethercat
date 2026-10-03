@@ -19,7 +19,7 @@
 #
 #------------------------------------------------------------------------------
 
-noinst_PROGRAMS = ec_xenomai_example
+noinst_PROGRAMS = ec_xenomai_example cix_ec_demo_cobalt
 
 ec_xenomai_example_SOURCES = main.c
 
@@ -30,6 +30,16 @@ ec_xenomai_example_CFLAGS = \
 ec_xenomai_example_LDFLAGS = \
 	-L$(top_builddir)/lib/.libs -lethercat_rtdm
 
+# Cix EL2008 demo (Xenomai3 Cobalt, same functionality as ec_xenomai_example)
+cix_ec_demo_cobalt_SOURCES = cix_ec_demo_cobalt.c
+
+cix_ec_demo_cobalt_CFLAGS = \
+	-Wall \
+	-I$(top_srcdir)/include
+
+cix_ec_demo_cobalt_LDFLAGS = \
+	-L$(top_builddir)/lib/.libs -lethercat_rtdm
+
 if ENABLE_XENOMAI_V3
 ec_xenomai_example_CFLAGS += \
 	-DXENOMAI_API_V3 \
@@ -37,12 +47,27 @@ ec_xenomai_example_CFLAGS += \
 
 ec_xenomai_example_LDFLAGS += \
 	$(XENOMAI_ALCHEMY_LDFLAGS)
+
+cix_ec_demo_cobalt_CFLAGS += \
+	-DXENOMAI_API_V3 \
+	$(XENOMAI_ALCHEMY_CFLAGS)
+
+cix_ec_demo_cobalt_LDFLAGS += \
+	$(XENOMAI_ALCHEMY_LDFLAGS)
 else
 ec_xenomai_example_CFLAGS += \
 	$(XENOMAI_NATIVE_CFLAGS) \
 	$(XENOMAI_RTDM_CFLAGS)
 
 ec_xenomai_example_LDFLAGS += \
+	$(XENOMAI_NATIVE_LDFLAGS) \
+	$(XENOMAI_RTDM_LDFLAGS)
+
+cix_ec_demo_cobalt_CFLAGS += \
+	$(XENOMAI_NATIVE_CFLAGS) \
+	$(XENOMAI_RTDM_CFLAGS)
+
+cix_ec_demo_cobalt_LDFLAGS += \
 	$(XENOMAI_NATIVE_LDFLAGS) \
 	$(XENOMAI_RTDM_LDFLAGS)
 endif

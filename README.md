@@ -102,6 +102,15 @@ You should have received a copy of the GNU General Public License along with
 the IgH EtherCAT Master; if not, write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+# Trademarks
+
+EtherCAT® is a registered trademark and patented technology of Beckhoff
+Automation GmbH. Use of EtherCAT technology and branding requires compliance
+with Beckhoff / EtherCAT Technology Group (ETG) terms. The GPL / LGPL of this
+repository cover software copyright only and do not grant any EtherCAT
+trademark or technology license. This repository does not include, and does
+not authorize use of, official EtherCAT or ETG logos.
+
 # I have a question / I want to contribute
 
 Please see the [contributiong document](CONTRIBUTING.md).

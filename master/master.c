@@ -2136,7 +2136,7 @@ int ec_master_calc_topology_rec(
                     return ret;
                 }
             } else {
-                return -1;
+                return -ENOSPC;
             }
         }
 

@@ -22,6 +22,7 @@
 include $(top_srcdir)/Makefile.kbuild
 
 EXTRA_DIST = \
-	mini.c
+	mini.c \
+	cix_demo_evl.c
 
 #-----------------------------------------------------------------------------

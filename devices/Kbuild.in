@@ -97,6 +97,10 @@ ifeq (@ENABLE_STMMAC@,1)
 	obj-m += stmmac/
 endif
 
+ifeq (@ENABLE_MACB@,1)
+	obj-m += macb/
+endif
+
 KBUILD_EXTRA_SYMBOLS := \
 	@abs_top_builddir@/$(LINUX_SYMVERS) \
 	@abs_top_builddir@/master/$(LINUX_SYMVERS)
